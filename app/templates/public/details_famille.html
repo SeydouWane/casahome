@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-4">{{ famille.nom_famille }}</h1>
+
+    {% if famille.photo_principale %}
+        <img src="{{ url_for('static', filename='images/familles/' + famille.photo_principale) }}"
+             alt="Photo principale" class="w-full h-64 object-cover rounded-lg mb-6">
+    {% endif %}
+
+    {% if famille.video_presentation %}
+        <video controls class="w-full rounded-lg mb-6">
+            <source src="{{ url_for('static', filename='videos/' + famille.video_presentation) }}" type="video/mp4">
+            Votre navigateur ne supporte pas la vidéo.
+        </video>
+    {% endif %}
+
+    <p class="text-gray-700"><strong>Région :</strong> {{ famille.region }}</p>
+    <p class="text-gray-700"><strong>Ville :</strong> {{ famille.ville }}</p>
+    <p class="text-gray-700"><strong>Localisation :</strong> {{ famille.localisation }}</p>
+    <p class="text-gray-700"><strong>Taille de la famille :</strong> {{ famille.taille_famille }} personnes</p>
+    
+    <p class="text-gray-700 mt-2"><strong>Ethnies :</strong>
+        {{ famille.ethnies | map(attribute='nom') | join(', ') }}
+        {% if famille.autres_ethnies %}
+            (Autres : {{ famille.autres_ethnies }})
+        {% endif %}
+    </p>
+
+    <p class="text-gray-700"><strong>Langues parlées :</strong>
+        {{ famille.langues | map(attribute='nom') | join(', ') }}
+        {% if famille.autres_langues %}
+            (Autres : {{ famille.autres_langues }})
+        {% endif %}
+    </p>
+
+    <div class="mt-4">
+        <h2 class="text-xl font-semibold mb-2">Présentation</h2>
+        <p class="text-gray-800">{{ famille.description }}</p>
+    </div>
+
+    <div class="mt-6">
+        <h2 class="text-xl font-semibold mb-2">Membres de la famille</h2>
+        <ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {% for membre in famille.membres %}
+            <li class="p-4 border rounded shadow-sm">
+                <p class="font-bold">{{ membre.prenom }} {{ membre.nom }}</p>
+                <p>Fonction : {{ membre.fonction }}</p>
+                <p>Langues : {{ membre.langues }}</p>
+                <p>{{ membre.description }}</p>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="mt-6">
+        <h2 class="text-xl font-semibold mb-2">Activités proposées</h2>
+        <ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {% for activite in famille.activites %}
+            <li class="p-4 border rounded shadow-sm">
+                <p class="font-bold">{{ activite.nom }}</p>
+                <p>{{ activite.description }}</p>
+                {% if activite.media %}
+                <img src="{{ url_for('static', filename='images/activites/' + activite.media) }}"
+                     alt="{{ activite.nom }}" class="mt-2 h-40 object-cover rounded">
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

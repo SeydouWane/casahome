@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard Admin{% endblock %}
+
+{% block content %}
+<div class="flex justify-end mb-4">
+  <a href="{{ url_for('auth.logout') }}"
+     class="text-sm bg-red-500 hover:bg-red-600 text-white font-semibold px-4 py-2 rounded-full shadow transition">
+    🔓 Déconnexion
+  </a>
+</div>
+
+<div class="space-y-10">
+  <h1 class="text-3xl font-bold text-emerald-800">Bienvenue, {{ current_user.prenom }} 👋</h1>
+
+  <!-- 📊 Statistiques -->
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+    <div class="bg-white rounded-xl shadow p-6">
+      <p class="text-sm text-gray-500">Familles enregistrées</p>
+      <p class="text-3xl font-semibold text-emerald-700">{{ nb_familles }}</p>
+    </div>
+    <div class="bg-white rounded-xl shadow p-6">
+      <p class="text-sm text-gray-500">Demandes de séjour</p>
+      <p class="text-3xl font-semibold text-emerald-700">{{ nb_demandes }}</p>
+    </div>
+    <div class="bg-white rounded-xl shadow p-6">
+      <p class="text-sm text-gray-500">Activités proposées</p>
+      <p class="text-3xl font-semibold text-emerald-700">{{ nb_activites }}</p>
+    </div>
+  </div>
+
+  <!-- ⚡ Accès rapide -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <a href="{{ url_for('admin_routes.liste_familles') }}" class="block bg-emerald-100 hover:bg-emerald-200 text-emerald-800 p-6 rounded-xl shadow transition text-center font-medium">
+    🏡 Gérer les Familles</a>
+
+    <a href="{{ url_for('admin_routes.liste_demandes') }}" class="block bg-orange-100 hover:bg-orange-200 text-orange-800 p-6 rounded-xl shadow transition text-center font-medium">
+      📬 Gérer les Demandes
+    </a>
+    <a href="{{ url_for('admin_routes.liste_utilisateurs') }}" class="block bg-blue-100 hover:bg-blue-200 text-blue-800 p-6 rounded-xl shadow transition text-center font-medium">
+      👤 Gérer les Utilisateurs
+    </a>
+  </div>
+</div>
+{% endblock %}

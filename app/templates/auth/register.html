@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Créer un compte{% endblock %}
+
+{% block content %}
+<div class="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md mt-10">
+    <h2 class="text-2xl font-bold text-center mb-4">Créer un compte</h2>
+
+    <form method="POST">
+        {{ form.hidden_tag() }}
+
+        <div class="mb-4">
+            {{ form.nom.label(class_="block text-sm font-medium text-gray-700") }}
+            {{ form.nom(class_="mt-1 block w-full p-2 border rounded") }}
+        </div>
+        <div class="mb-4">
+            {{ form.prenom.label(class_="block text-sm font-medium text-gray-700") }}
+            {{ form.prenom(class_="mt-1 block w-full p-2 border rounded") }}
+        </div>
+        <div class="mb-4">
+            {{ form.email.label(class_="block text-sm font-medium text-gray-700") }}
+            {{ form.email(class_="mt-1 block w-full p-2 border rounded") }}
+        </div>
+        <div class="mb-4">
+            {{ form.mot_de_passe.label(class_="block text-sm font-medium text-gray-700") }}
+            {{ form.mot_de_passe(class_="mt-1 block w-full p-2 border rounded") }}
+        </div>
+        <div class="mb-4">
+           {{ form.confirmer.label(class_="block text-sm font-medium text-gray-700") }}
+           {{ form.confirmer(class_="mt-1 block w-full p-2 border rounded") }}
+
+        </div>
+
+        <div class="mt-6">
+            {{ form.submit(class_="w-full bg-green-600 text-white p-2 rounded hover:bg-green-700") }}
+        </div>
+    </form>
+
+    <div class="text-center mt-4 text-sm">
+        Déjà un compte ?
+        <a href="{{ url_for('auth.login') }}" class="text-green-700 hover:underline font-semibold">Se connecter</a>
+    </div>
+</div>
+{% endblock %}

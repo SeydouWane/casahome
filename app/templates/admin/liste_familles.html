@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}Familles enregistrées{% endblock %}
+
+{% block content %}
+<h2 class="text-2xl font-bold mb-6">🏡 Liste des Familles</h2>
+<div class="mb-6">
+    <a href="{{ url_for('admin_routes.creer_famille') }}"
+       class="bg-green-600 text-white px-4 py-2 rounded shadow hover:bg-green-700 transition">
+        ➕ Ajouter une Famille
+    </a>
+</div>
+
+
+{% if familles %}
+<table class="table-auto w-full border border-gray-200 shadow rounded">
+<thead class="bg-green-100 text-green-900">
+    <tr>
+        <th class="px-4 py-2 text-left">Nom</th>
+        <th class="px-4 py-2 text-left">Ethnie</th>
+        <th class="px-4 py-2 text-left">Région</th>
+        <th class="px-4 py-2 text-left">Langues parlées</th>
+        <th class="px-4 py-2 text-left">Actions</th>
+    </tr>
+</thead>
+<tbody>
+    {% for famille in familles %}
+    <tr class="border-t hover:bg-green-50">
+        <td class="px-4 py-2">{{ famille.nom_famille or "—" }}</td>
+        
+        <td class="px-4 py-2">
+            {% if famille.ethnies %}
+                {{ famille.ethnies | map(attribute='nom') | join(', ') }}
+            {% else %}
+                —
+            {% endif %}
+        </td>
+        
+        <td class="px-4 py-2">{{ famille.region or "—" }}</td>
+        
+        <td class="px-4 py-2">
+            {% if famille.langues %}
+                {{ famille.langues | map(attribute='nom') | join(', ') }}
+            {% else %}
+                —
+            {% endif %}
+        </td>
+
+        <td class="px-4 py-2 space-x-2">
+            <a href="{{ url_for('admin_routes.details_famille', famille_id=famille.id) }}"
+               class="text-blue-600 hover:text-blue-800" title="Voir détails">
+                👁
+            </a>
+            <a href="{{ url_for('admin_routes.supprimer_famille', famille_id=famille.id) }}"
+               class="text-red-600 hover:text-red-800"
+               onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette famille ?');"
+               title="Supprimer">
+                🗑
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
+</tbody>
+
+
+</table>
+{% else %}
+<p class="text-gray-600">Aucune famille enregistrée pour le moment.</p>
+{% endif %}
+
+{% endblock %}

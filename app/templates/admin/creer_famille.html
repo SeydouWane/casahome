@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% block title %}Ajouter une Famille{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h3 class="mb-4">➕ Ajouter une Famille</h3>
+
+    <form method="POST" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+
+        <!-- Nom -->
+        <div class="mb-3">
+            {{ form.nom_famille.label(class="form-label") }}
+            {{ form.nom_famille(class="form-control") }}
+        </div>
+
+        <!-- Région -->
+        <div class="mb-3">
+            {{ form.region.label(class="form-label") }}
+            {{ form.region(class="form-select") }}
+        </div>
+
+        <!-- Ville -->
+        <div class="mb-3">
+            {{ form.ville.label(class="form-label") }}
+            {{ form.ville(class="form-control") }}
+        </div>
+
+        <!-- Localisation -->
+        <div class="mb-3">
+            {{ form.localisation.label(class="form-label") }}
+            {{ form.localisation(class="form-control") }}
+            <div id="map" style="height: 300px;" class="mt-2 rounded border"></div>
+        </div>
+
+        <!-- Taille famille -->
+        <div class="mb-3">
+            {{ form.taille_famille.label(class="form-label") }}
+            {{ form.taille_famille(class="form-control") }}
+        </div>
+
+        <!-- Ethnies -->
+        <div class="mb-3">
+            {{ form.ethnies.label(class="form-label") }}
+            {{ form.ethnies(class="form-select", multiple=True) }}
+            <button type="button" class="btn btn-sm btn-outline-primary mt-2" onclick="toggleInput('ethnie-custom')">+ Ajouter une ethnie</button>
+            <input type="text" name="autres_ethnies" id="ethnie-custom" class="form-control mt-2" style="display: none;">
+        </div>
+
+        <!-- Langues -->
+        <div class="mb-3">
+            {{ form.langues.label(class="form-label") }}
+            {{ form.langues(class="form-select", multiple=True) }}
+            <button type="button" class="btn btn-sm btn-outline-primary mt-2" onclick="toggleInput('langue-custom')">+ Ajouter une langue</button>
+            <input type="text" name="autres_langues" id="langue-custom" class="form-control mt-2" style="display: none;">
+        </div>
+
+        <!-- Description -->
+        <div class="mb-3">
+            {{ form.description.label(class="form-label") }}
+            {{ form.description(class="form-control", rows=4) }}
+        </div>
+
+        <!-- Photo -->
+        <div class="mb-3">
+            {{ form.photo_principale.label(class="form-label") }}
+            {{ form.photo_principale(class="form-control", onchange="previewImage(event)") }}
+            <div class="mt-2">
+                <img id="preview" src="#" alt="Aperçu de la photo" style="max-width: 200px; display: none;">
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-success">{{ form.submit.label.text }}</button>
+    </form>
+</div>
+
+<!-- Scripts -->
+<script>
+    function toggleInput(id) {
+        const input = document.getElementById(id);
+        input.style.display = input.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function previewImage(event) {
+        var reader = new FileReader();
+        reader.onload = function(){
+            var output = document.getElementById('preview');
+            output.src = reader.result;
+            output.style.display = 'block';
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>
+
+<!-- Leaflet JS for OpenStreetMap -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+    const map = L.map('map').setView([12.5, -16.3], 8);  // Casamance approx
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap'
+    }).addTo(map);
+
+    let marker;
+    map.on('click', function(e) {
+        if (marker) map.removeLayer(marker);
+        marker = L.marker(e.latlng).addTo(map);
+        document.getElementById("{{ form.localisation.id }}").value = `${e.latlng.lat}, ${e.latlng.lng}`;
+    });
+</script>
+{% endblock %}

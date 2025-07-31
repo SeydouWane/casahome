@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="py-16 bg-white">
+  <div class="max-w-4xl mx-auto px-4 text-center">
+    <h1 class="text-4xl font-bold text-green-700 mb-6">Contactez-nous</h1>
+    <p class="text-lg text-gray-600 mb-10">
+      Pour toute question, suggestion ou demande de partenariat, n'hésitez pas à nous contacter :
+    </p>
+
+    <div class="flex flex-col items-center space-y-6">
+      <!-- WhatsApp -->
+      <a href="https://wa.me/22177177453228" target="_blank"
+         class="inline-flex items-center px-6 py-3 bg-green-600 text-white rounded-full shadow hover:bg-green-700 transition">
+        📱 Contacter sur WhatsApp
+      </a>
+
+      <!-- Email -->
+      <a href="mailto:papaseydou.wane@unchk.edu.sn"
+         class="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-full shadow hover:bg-blue-700 transition">
+        ✉️ Envoyer un e-mail
+      </a>
+    </div>
+  </div>
+</section>
+{% endblock %}

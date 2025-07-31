@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block title %}Accueil{% endblock %}
+{% block content %}
+
+<!-- 🎥 Vidéo immersive -->
+<section class="relative w-full h-[500px] mb-16 rounded-xl overflow-hidden shadow-xl">
+
+  <!-- 🎥 Vidéo en arrière-plan -->
+  <div class="w-full h-full">
+    <video
+      autoplay
+      muted
+      loop
+      playsinline
+      class="w-full h-[500px] object-cover">
+      <source src="{{ url_for('static', filename='videos/casamance.mp4') }}" type="video/mp4">
+      Votre navigateur ne supporte pas la vidéo HTML5.
+    </video>
+  </div>
+
+  <!-- 📝 Texte par-dessus -->
+  <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center z-10">
+    <div class="text-center text-white px-6 animate-fade-in">
+      <h1 class="text-5xl font-extrabold mb-4 drop-shadow">Bienvenue sur CasaHome</h1>
+      <p class="text-xl mb-6 max-w-2xl mx-auto">Plongez dans l’authenticité de la Casamance en séjournant dans des familles locales accueillantes.</p>
+      <a href="{{ url_for('public.trouver_famille') }}"
+         class="inline-block bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-6 py-3 rounded-full shadow-lg transition transform hover:scale-105">
+        Trouver votre famille d’accueil
+      </a>
+    </div>
+  </div>
+
+</section>
+
+
+<!-- 💚 Pourquoi CasaHome -->
+<section class="text-center max-w-3xl mx-auto mb-20">
+  <h2 class="text-3xl font-bold text-emerald-700 mb-4">Pourquoi choisir CasaHome ?</h2>
+  <p class="text-gray-600 text-lg leading-relaxed">
+    CasaHome est une initiative de <strong>tourisme communautaire en Casamance</strong> visant à créer une connexion humaine et culturelle profonde entre les visiteurs et les familles locales.
+  </p>
+</section>
+
+<!-- 🌟 Avantages -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+  <div class="bg-white border border-emerald-100 rounded-xl shadow-md p-6 text-center hover:shadow-lg transition">
+    <img src="{{ url_for('static', filename='images/icone_culture.png') }}" alt="Culture" class="mx-auto w-14 h-14 mb-4">
+    <h3 class="text-xl font-semibold text-emerald-700 mb-2">Immersion culturelle</h3>
+    <p class="text-gray-600">Découvrez la cuisine, les danses et les coutumes de la Casamance à travers le quotidien des familles.</p>
+  </div>
+  <div class="bg-white border border-emerald-100 rounded-xl shadow-md p-6 text-center hover:shadow-lg transition">
+    <img src="{{ url_for('static', filename='images/icone_securite.png') }}" alt="Sécurité" class="mx-auto w-14 h-14 mb-4">
+    <h3 class="text-xl font-semibold text-emerald-700 mb-2">Hébergements validés</h3>
+    <p class="text-gray-600">Chaque famille est vérifiée par nos soins pour garantir confort, sécurité et authenticité.</p>
+  </div>
+  <div class="bg-white border border-emerald-100 rounded-xl shadow-md p-6 text-center hover:shadow-lg transition">
+    <img src="{{ url_for('static', filename='images/icone_partage.png') }}" alt="Partage" class="mx-auto w-14 h-14 mb-4">
+    <h3 class="text-xl font-semibold text-emerald-700 mb-2">Tourisme responsable</h3>
+    <p class="text-gray-600">Contribuez à une économie locale durable et équitable en soutenant les familles d’accueil.</p>
+  </div>
+</section>
+
+{% endblock %}

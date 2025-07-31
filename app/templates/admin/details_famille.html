@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}Détails de la Famille{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto mt-10 bg-white p-6 shadow rounded-lg">
+    <h2 class="text-2xl font-bold mb-4 text-green-700">👁 Détails de la Famille : {{ famille.nom_famille }}</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+            <p><strong class="text-gray-700">📍 Région :</strong> {{ famille.region }}</p>
+            <p><strong class="text-gray-700">🏘️ Ville :</strong> {{ famille.ville }}</p>
+            <p><strong class="text-gray-700">🗺️ Localisation :</strong> {{ famille.localisation }}</p>
+            <p><strong class="text-gray-700">👪 Taille de la famille :</strong> {{ famille.taille_famille }}</p>
+        </div>
+
+        <div>
+            <p><strong class="text-gray-700">🌍 Ethnie(s) :</strong>
+                {% if famille.ethnies %}
+                    {{ famille.ethnies | map(attribute='nom') | join(', ') }}
+                {% else %}
+                    Aucune
+                {% endif %}
+            </p>
+            <p><strong class="text-gray-700">🗣 Langue(s) parlée(s) :</strong>
+                {% if famille.langues %}
+                    {{ famille.langues | map(attribute='nom') | join(', ') }}
+                {% else %}
+                    Aucune
+                {% endif %}
+            </p>
+        </div>
+    </div>
+
+    <hr class="my-6">
+
+    <div>
+        <h3 class="text-lg font-semibold text-green-600 mb-2">📝 Description de la famille</h3>
+        <p class="text-gray-800 bg-gray-50 p-4 rounded">{{ famille.description or "Aucune description fournie." }}</p>
+    </div>
+
+    {% if famille.photo_principale %}
+    <div class="mt-6">
+        <h3 class="text-lg font-semibold text-green-600 mb-2">📷 Photo de la famille</h3>
+        <img src="{{ url_for('static', filename='images/familles/' + (famille.photo or 'default.jpg')) }}" alt="Photo de la famille" class="rounded shadow max-w-sm">
+    </div>
+    {% endif %}
+
+    <div class="mt-8 flex gap-4">
+        <a href="{{ url_for('admin_routes.liste_familles') }}"
+           class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded shadow">
+            ← Retour à la liste
+        </a>
+
+        <a href="{{ url_for('admin_routes.supprimer_famille', famille_id=famille.id) }}"
+           onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette famille ?');"
+           class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded shadow">
+            🗑 Supprimer
+        </a>
+    </div>
+</div>
+{% endblock %}
