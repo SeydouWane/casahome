@@ -4,3 +4,4 @@ flask-wtf
 flask-sqlalchemy
 flask-migrate
 email-validator
+wtforms-sqlalchemy>=0.4.0
