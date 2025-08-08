@@ -3,6 +3,9 @@ from wtforms import StringField, TextAreaField, FileField, SubmitField, SelectFi
 from wtforms.validators import DataRequired
 from wtforms_sqlalchemy.fields import QuerySelectMultipleField
 from app.models import Ethnie, Langue
+from wtforms_sqlalchemy.orm import QuerySelectMultipleField
+# (and QuerySelectField if you use it)
+
 
 class FamilleForm(FlaskForm):
     nom_famille = StringField("Nom de la famille", validators=[DataRequired()])
